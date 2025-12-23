@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import { useAuth } from '@/store/useAuth'
 
 export const API_BASE_URL = 'https://jobapplicationevaluation-b0c5gpaadbahascd.canadacentral-01.azurewebsites.net/api'
