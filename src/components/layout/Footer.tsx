@@ -1,4 +1,3 @@
-import { Building2 } from "lucide-react"
 import { Link } from "@tanstack/react-router"
 
 export function Footer() {
@@ -9,10 +8,8 @@ export function Footer() {
                     {/* Sol taraf - Logo ve açıklama */}
                     <div className="space-y-3">
                         <div className="flex items-center gap-2">
-                            <div className="h-8 w-8 rounded-lg bg-blue-600 flex items-center justify-center">
-                                <Building2 className="h-5 w-5 text-white" />
-                            </div>
-                            <span className="font-bold text-gray-900 text-base">JobApplicationEvaluation</span>
+                            <img src="/Logo.png" alt="YorumSizden" className="h-8 w-8 rounded-lg object-cover" />
+                            <span className="font-bold text-gray-900 text-base">YorumSizden</span>
                         </div>
                         <p className="text-sm text-gray-600 leading-relaxed">
                             Mülakat deneyimlerini paylaş, topluluğa katkı sağla ve iş arayan adaylara yol göster.

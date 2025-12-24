@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
-import { Building2, Menu, ChevronDown, LogOut } from 'lucide-react'
+import { Menu, ChevronDown, LogOut } from 'lucide-react'
 import { useMemo, useState, useRef, useEffect } from 'react'
 import { useAuth } from '@/store/useAuth'
 import { apiClient, API_ENDPOINTS } from '@/config/api'
@@ -46,9 +46,7 @@ export function Header() {
                 <div className="hidden md:flex items-center gap-4">
                     <div className="flex items-center gap-2 flex-1">
                         <Link to="/" className="flex items-center gap-2">
-                            <div className="h-8 w-8 rounded-full bg-blue-600 text-white flex items-center justify-center">
-                                <Building2 className="h-4 w-4" />
-                            </div>
+                            <img src="/Logo.png" alt="YorumSizden" className="h-10 w-10 rounded-full object-cover" />
                             <span className="text-sm font-semibold text-gray-900 whitespace-nowrap">YorumSizden</span>
                         </Link>
                     </div>
@@ -126,9 +124,7 @@ export function Header() {
                 <div className="md:hidden">
                     <div className="flex items-center justify-between">
                         <Link to="/" className="flex items-center gap-2">
-                            <div className="h-8 w-8 rounded-full bg-blue-600 text-white flex items-center justify-center">
-                                <Building2 className="h-4 w-4" />
-                            </div>
+                            <img src="/Logo.png" alt="YorumSizden" className="h-10 w-10 rounded-full object-cover" />
                             <span className="text-sm font-semibold text-gray-900 whitespace-nowrap">YorumSizden</span>
                         </Link>
 

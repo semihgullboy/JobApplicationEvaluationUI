@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Mail, Lock, Eye, EyeOff, Briefcase } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -54,7 +54,7 @@ const Login = () => {
             <div className="flex max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
                 <div className="hidden lg:flex lg:w-1/2 bg-blue-600 relative flex-col p-12">
                     <div className="flex items-center gap-3 text-white mb-8">
-                        <Briefcase size={40} />
+                        <img src="/Logo.png" alt="YorumSizden" className="h-12 w-12 rounded-full object-cover" />
                         <span className="text-2xl font-bold">YorumSizden</span>
                     </div>
 
