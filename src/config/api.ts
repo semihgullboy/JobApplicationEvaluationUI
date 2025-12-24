@@ -39,4 +39,5 @@ apiClient.interceptors.response.use(
 export const API_ENDPOINTS = {
     AUTH_LOGIN: '/Auth/login',
     AUTH_LOGOUT: '/Auth/logout',
+    AUTH_REGISTER: '/Auth/register',
 }

@@ -2,6 +2,7 @@ import { createRootRoute, createRoute, createRouter, NotFoundRoute } from '@tans
 import Home from './pages/Home'
 import Jobs from './pages/Jobs'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import { RootLayout } from './components/layout/RootLayout'
@@ -28,6 +29,12 @@ const loginRoute = createRoute({
     component: Login,
 })
 
+const registerRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/register',
+    component: Register,
+})
+
 const aboutRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/about',
@@ -45,7 +52,7 @@ const notFoundRoute = new NotFoundRoute({
     component: () => <div className="p-8 text-center">Sayfa bulunamadı.</div>,
 })
 
-const routeTree = rootRoute.addChildren([indexRoute, jobsRoute, loginRoute, aboutRoute, contactRoute])
+const routeTree = rootRoute.addChildren([indexRoute, jobsRoute, loginRoute, registerRoute, aboutRoute, contactRoute])
 
 export const router = createRouter({
     routeTree,

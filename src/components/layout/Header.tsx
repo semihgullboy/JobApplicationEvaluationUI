@@ -86,7 +86,7 @@ export function Header() {
                                 <Link to="/login">
                                     <Button variant="outline" size="sm" className="h-7 px-3 text-[11px]">Giriş Yap</Button>
                                 </Link>
-                                <Link to="/login">
+                                <Link to="/register">
                                     <Button size="sm" className="h-7 px-3 text-[11px] bg-blue-600 text-white hover:bg-blue-700">Kayıt Ol</Button>
                                 </Link>
                             </>
@@ -176,7 +176,7 @@ export function Header() {
                                     <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
                                         <Button variant="outline" size="sm" className="w-full">Giriş Yap</Button>
                                     </Link>
-                                    <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                                    <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
                                         <Button size="sm" className="w-full bg-blue-600 text-white hover:bg-blue-700">Kayıt Ol</Button>
                                     </Link>
                                 </div>
