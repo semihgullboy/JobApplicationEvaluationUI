@@ -17,6 +17,7 @@ const Jobs = () => {
     const { companies, totalCount, loading: companiesLoading, filterCompanies } = useCompanyStore();
     const [hasFiltered, setHasFiltered] = useState(false);
     const [page, setPage] = useState(1);
+    const [filtersOpen, setFiltersOpen] = useState(false);
     const initialized = useRef(false);
     const pageSize = 9;
 
@@ -126,10 +127,26 @@ const Jobs = () => {
     const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="space-y-6 p-6 bg-linear-to-br from-blue-50 to-white min-h-screen">
-                <div className="flex gap-6 items-start">
-                    <div className="w-64 shrink-0">
-                        <Card className="p-6 space-y-4">
+            <div className="space-y-4 p-4 md:p-6 bg-linear-to-br from-blue-50 to-white min-h-screen">
+                {/* Mobile Filter Toggle Button */}
+                <div className="lg:hidden mb-4">
+                    <Button
+                        type="button"
+                        onClick={() => setFiltersOpen(!filtersOpen)}
+                        className="w-full flex items-center justify-center gap-2"
+                        variant="outline"
+                    >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                        </svg>
+                        {filtersOpen ? 'Filtreleri Gizle' : 'Filtreleri Göster'}
+                    </Button>
+                </div>
+
+                <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-start">
+                    {/* Filters Sidebar */}
+                    <div className={`w-full lg:w-64 lg:shrink-0 ${filtersOpen ? 'block' : 'hidden lg:block'}`}>
+                        <Card className="p-4 md:p-6 space-y-4">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -215,42 +232,45 @@ const Jobs = () => {
                         </Card>
                     </div>
 
-                    <div className="flex-1 space-y-4">
-                        <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
-                            <p className="text-gray-600">
+                    {/* Main Content */}
+                    <div className="flex-1 w-full space-y-4">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
+                            <p className="text-sm md:text-base text-gray-600">
                                 <span className="font-semibold text-gray-900">{totalCount}</span> tane ilan bulundu
                             </p>
-                            <div className="flex items-center gap-3 flex-wrap">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
                                 <div className="flex items-center gap-1 text-xs uppercase tracking-wide text-gray-500 font-semibold">
                                     <span className="h-6 w-6 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">⇅</span>
                                     <span>Sıralama</span>
                                 </div>
-                                <div className="inline-flex rounded-lg border border-gray-200 bg-white shadow-sm overflow-hidden">
-                                    {(['Name', 'Rating', 'ReviewCount'] as const).map((key) => (
-                                        <button
-                                            type="button"
-                                            key={key}
-                                            onClick={() => applySortBy(key)}
-                                            className={`px-3 py-2 text-sm font-medium transition-colors ${formValues.sortBy === key ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-gray-100'}`}
-                                            disabled={companiesLoading}
-                                        >
-                                            {key === 'Name' && 'İsim'}
-                                            {key === 'Rating' && 'Puan'}
-                                            {key === 'ReviewCount' && 'Değerlendirme'}
-                                        </button>
-                                    ))}
+                                <div className="flex flex-wrap gap-2 w-full sm:w-auto">
+                                    <div className="inline-flex rounded-lg border border-gray-200 bg-white shadow-sm overflow-hidden w-full sm:w-auto">
+                                        {(['Name', 'Rating', 'ReviewCount'] as const).map((key) => (
+                                            <button
+                                                type="button"
+                                                key={key}
+                                                onClick={() => applySortBy(key)}
+                                                className={`flex-1 sm:flex-none px-3 py-2 text-sm font-medium transition-colors ${formValues.sortBy === key ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                                                disabled={companiesLoading}
+                                            >
+                                                {key === 'Name' && 'İsim'}
+                                                {key === 'Rating' && 'Puan'}
+                                                {key === 'ReviewCount' && 'Değerlendirme'}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={toggleSortOrder}
+                                        disabled={companiesLoading}
+                                        className="flex items-center gap-2 w-full sm:w-auto justify-center"
+                                    >
+                                        <span className="text-sm font-medium">{formValues.sortOrder === 'asc' ? 'Artan' : 'Azalan'}</span>
+                                        <span className="text-lg leading-none">{formValues.sortOrder === 'asc' ? '↑' : '↓'}</span>
+                                    </Button>
                                 </div>
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={toggleSortOrder}
-                                    disabled={companiesLoading}
-                                    className="flex items-center gap-2"
-                                >
-                                    <span className="text-sm font-medium">{formValues.sortOrder === 'asc' ? 'Artan' : 'Azalan'}</span>
-                                    <span className="text-lg leading-none">{formValues.sortOrder === 'asc' ? '↑' : '↓'}</span>
-                                </Button>
                             </div>
                         </div>
 
@@ -266,28 +286,28 @@ const Jobs = () => {
                             </div>
                         )}
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4">
                             {companies.map((company) => (
-                                <Card key={company.id} className="p-5 hover:shadow-lg transition-shadow">
-                                    <div className="space-y-4">
+                                <Card key={company.id} className="p-4 md:p-5 hover:shadow-lg transition-shadow">
+                                    <div className="space-y-3 md:space-y-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-lg font-semibold">
+                                            <div className="h-10 w-10 shrink-0 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-lg font-semibold">
                                                 🏢
                                             </div>
-                                            <div className="min-w-0">
-                                                <h4 className="text-lg font-semibold text-gray-900 truncate">{company.name}</h4>
-                                                <div className="flex flex-wrap gap-2 mt-1">
-                                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-medium border border-emerald-100">
+                                            <div className="min-w-0 flex-1">
+                                                <h4 className="text-base md:text-lg font-semibold text-gray-900 truncate">{company.name}</h4>
+                                                <div className="flex flex-wrap gap-1.5 md:gap-2 mt-1">
+                                                    <span className="inline-flex items-center gap-1 px-2 md:px-2.5 py-0.5 md:py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-medium border border-emerald-100">
                                                         📍 {company.city}
                                                     </span>
-                                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-medium border border-indigo-100">
+                                                    <span className="inline-flex items-center gap-1 px-2 md:px-2.5 py-0.5 md:py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-medium border border-indigo-100">
                                                         🏷️ {company.sectorName}
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="flex items-center justify-between text-sm">
+                                        <div className="flex items-center justify-between text-xs md:text-sm">
                                             <div className="flex items-center gap-2">
                                                 <span className="text-yellow-600 font-semibold">⭐ {company.averageRating.toFixed(1)}</span>
                                                 <span className="text-gray-400">|</span>
@@ -308,21 +328,23 @@ const Jobs = () => {
                             ))}
                         </div>
                         {totalPages > 1 && (
-                            <div className="flex items-center justify-center gap-3 pt-4">
+                            <div className="flex items-center justify-center gap-2 md:gap-3 pt-4">
                                 <Button
                                     variant="outline"
                                     size="sm"
                                     disabled={page === 1 || companiesLoading}
                                     onClick={() => loadPage(Math.max(1, page - 1))}
+                                    className="text-xs md:text-sm"
                                 >
                                     Önceki
                                 </Button>
-                                <span className="text-sm text-gray-600">{page} / {totalPages}</span>
+                                <span className="text-xs md:text-sm text-gray-600">{page} / {totalPages}</span>
                                 <Button
                                     variant="outline"
                                     size="sm"
                                     disabled={page >= totalPages || companiesLoading}
                                     onClick={() => loadPage(Math.min(totalPages, page + 1))}
+                                    className="text-xs md:text-sm"
                                 >
                                     Sonraki
                                 </Button>
